@@ -20,7 +20,7 @@ cat "/tmp/subdirs.txt" | while read subdir; do
 	mkdir -p "${2}/${mibatchcompare_filename_root}_${date}"
 
 	if [ "$#" != 3 ]; then
-		echo mibatchcompare: usage requires an input and output directory. 
+		echo mibatchcompare: us requires an input and output directory. 
 	    echo mibatchcompare: usage is:
 	    echo mibatchcompare: ./mibatchcompare.sh [input directory] [output directory] 0
 		exit 1
