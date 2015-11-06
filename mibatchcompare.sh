@@ -37,7 +37,7 @@ cat "/tmp/subdirs.txt" | while read subdir; do
 	find_opts+="-type f ! -name '.*'"
 	
 	if [ ! -e "$reportcsv" ]; then
-	echo "filename,general_format,general_format_profile,general_format_version,general_duration,general_filesize,general_encoded_application,video_format,video_format_version,video_codecid,video_width,video_height,video_displayaspectratio,video_display_aspect_ratio_string,video_framerate,video_colorspace,video_bitdepth,video_compression_mode,video_standard,audio_format,audio_codecid,audio_channels,audio_samplingrate,audio_bitdepth" > "$reportcsv"
+	echo "filename,general_format,general_format_profile,general_format_version,general_duration,general_filesize,general_encoded_application,video_format,video_format_version,video_codecid,video_width,video_height,video_displayaspectratio,video_display_aspect_ratio_string,video_framerate,video_colorspace,video_bitdepth,video_compression_mode,audio_format,audio_codecid,audio_channels,audio_samplingrate,audio_bitdepth" > "$reportcsv"
 	fi
 
 	echo "mibatchcompare: Running batch MediaInfo reporting on the following files:"
@@ -49,8 +49,8 @@ cat "/tmp/subdirs.txt" | while read subdir; do
         general_format=`mediainfo --Inform="General;%Format%" "${file}"`
 		general_format_profile=`mediainfo --Inform="General;%Format_Profile%" "${file}"`
         general_format_version=`mediainfo --Inform="General;%Format_Version%" "${file}"`
-		general_duration=`mediainfo --Inform="General;%Duration%" "${file}"`
-		general_filesize=`mediainfo --Inform="General;%FileSize%" "${file}"`
+		general_duration=`mediainfo --Inform="General;%Duration/String%" "${file}"`
+		general_filesize=`mediainfo --Inform="General;%FileSize/String%" "${file}"`
 		general_encoded_application=`mediainfo --Inform="General;%Encoded_Application%" "${file}"`
 		video_format=`mediainfo --Inform="Video;%Format%" "${file}"`
 		video_format_version=`mediainfo --Inform="Video;%Format_Version%" "${file}"`
@@ -63,7 +63,6 @@ cat "/tmp/subdirs.txt" | while read subdir; do
 		video_colorspace=`mediainfo --Inform="Video;%ColorSpace%" "${file}"`
 		video_bitdepth=`mediainfo --Inform="Video;%BitDepth%" "${file}"`
 		video_compression_mode=`mediainfo --Inform="Video;%Compression_Mode%" "${file}"`
-		video_standard= `mediainfo --Inform="Video;%Standard%" "${file}"`
 		audio_format=`mediainfo --Inform="Audio;%Format%" "${file}"`
 		audio_codecid=`mediainfo --Inform="Audio;%CodecID%" "${file}"`
 		audio_channels=`mediainfo --Inform="Audio;%Channel(s)%" "${file}"`
@@ -73,7 +72,7 @@ cat "/tmp/subdirs.txt" | while read subdir; do
 
 
         # report out to csv file
-        echo "${filename},${general_format},${general_format_version},${general_format_version},${general_duration},${general_filesize},${general_encoded_application},${video_format},${video_format_version},${video_codecid},${video_width},${video_height},${video_displayaspectratio},${video_display_aspect_ratio_string},${video_framerate},${video_colorspace},${video_bitdepth},${video_compression_mode},${video_standard},${audio_format},${audio_codecid},${audio_channels},${audio_samplingrate},${audio_bitdepth}${general_format_profile}${file_size}${file_duration}${display_aspect_ratio}${file_standard}" >> "$reportcsv"
+        echo "${filename},${general_format},${general_format_version},${general_format_version},${general_duration},${general_filesize},${general_encoded_application},${video_format},${video_format_version},${video_codecid},${video_width},${video_height},${video_displayaspectratio},${video_display_aspect_ratio_string},${video_framerate},${video_colorspace},${video_bitdepth},${video_compression_mode},${audio_format},${audio_codecid},${audio_channels},${audio_samplingrate},${audio_bitdepth}" >> "$reportcsv"
 	done
 	echo "mibatchcompare: Batch MediaInfo reporting complete."
 	echo "mibatchcompare: A report CSV can be found at:"
